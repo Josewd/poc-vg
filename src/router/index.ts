@@ -31,7 +31,7 @@ router.post('/', async (req, res) => {
 
 // Shotstack endpoint - similar to FFmpeg endpoint
 router.post('/shotstack', async (req, res) => {
-  const { url, templateId = '2635a995-c613-478b-8dd6-429529854211', maxItems = 5 } = req.body;
+  const { url, templateId = process.env.SHOTSTACK_TEMPLATE_ID || '', maxItems = 5 } = req.body;
   
   if (!url) {
     return res.status(400).json({ error: 'Missing feed URL' });

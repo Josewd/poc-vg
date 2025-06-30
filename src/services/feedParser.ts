@@ -5,7 +5,7 @@ import { createAdvancedStoryVideo } from '../services/videoMaker';
 import { shotstackMaker } from '../services/shotstackVideoMaker';
 
 export async function processFeed(feedUrl: string) {
-  console.error('Processing feed:', feedUrl);
+  console.log('Processing feed:', feedUrl);
   const { data } = await axios.get(feedUrl);
   const parsed = await parseStringPromise(data);
 

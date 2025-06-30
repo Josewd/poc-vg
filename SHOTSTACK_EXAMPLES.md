@@ -198,7 +198,7 @@ Lists all renders from the account.
 ## Complete Usage Example
 
 ```javascript
-// 1. Processar feed automaticamente
+// 1. Process feed automatically
 const response = await fetch('http://localhost:3000/shotstack', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
@@ -211,46 +211,46 @@ const response = await fetch('http://localhost:3000/shotstack', {
 
 const result = await response.json();
 
-// 2. Verificar resultados
-console.log(`Criados: ${result.summary.success} vídeos`);
-console.log(`Erros: ${result.summary.errors}`);
+// 2. Check results
+console.log(`Created: ${result.summary.success} videos`);
+console.log(`Errors: ${result.summary.errors}`);
 
-// 3. Usar URLs dos vídeos
+// 3. Use video URLs
 result.videos.forEach(video => {
   if (video.status === 'success') {
-    console.log(`Vídeo: ${video.title}`);
+    console.log(`Video: ${video.title}`);
     console.log(`URL: ${video.videoUrl}`);
   }
 });
 ```
 
-## Casos de Uso
+## Use Cases
 
-1. **🆕 Automação de Conteúdo**: Processar feeds RSS e gerar vídeos automaticamente
-2. **📰 Portais de Notícias**: Converter artigos em vídeos profissionais
-3. **📱 Redes Sociais**: Criar conteúdo visual para engajamento
-4. **🎯 Marketing**: Gerar vídeos promocionais em escala
-5. **🔄 Integração CMS**: Automatizar criação de vídeos em sistemas existentes
+1. **🆕 Content Automation**: Process RSS feeds and generate videos automatically
+2. **📰 News Portals**: Convert articles into professional videos
+3. **📱 Social Media**: Create visual content for engagement
+4. **🎯 Marketing**: Generate promotional videos at scale
+5. **🔄 CMS Integration**: Automate video creation in existing systems
 
-## Testes
+## Testing
 
-Execute o script de teste para verificar todas as funcionalidades:
+Run the test script to verify all functionalities:
 
 ```bash
 npm run test:shotstack
 ```
 
-O script testa:
-- ✅ Processamento de feed MRSS (endpoint principal)
-- ✅ Criação de vídeos individuais
-- ✅ Templates personalizados
-- ✅ Verificação de status
-- ✅ Listagem de renders
+The script tests:
+- ✅ MRSS feed processing (main endpoint)
+- ✅ Individual video creation
+- ✅ Custom templates
+- ✅ Status checking
+- ✅ Render listing
 
-## Próximos Passos
+## Next Steps
 
-- [ ] Cache de vídeos gerados para evitar re-processamento
-- [ ] Interface web para gerenciar templates e renders
-- [ ] Suporte a múltiplos templates por feed
-- [ ] Webhooks para notificações em tempo real
-- [ ] Analytics de uso e performance 
+- [ ] Video caching to avoid re-processing
+- [ ] Web interface to manage templates and renders
+- [ ] Support for multiple templates per feed
+- [ ] Webhooks for real-time notifications
+- [ ] Usage and performance analytics 

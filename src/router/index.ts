@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Endpoint Shotstack - similar to FFmpeg endpoint
+// Shotstack endpoint - similar to FFmpeg endpoint
 router.post('/shotstack', async (req, res) => {
   const { url, templateId = '2635a995-c613-478b-8dd6-429529854211', maxItems = 5 } = req.body;
   
@@ -42,7 +42,7 @@ router.post('/shotstack', async (req, res) => {
   }
 
   try {
-    console.log(`Processing feed MRSS with Shotstack: ${url}`);
+    console.log(`Processing MRSS feed with Shotstack: ${url}`);
     console.log(`Template ID: ${templateId}, Max items: ${maxItems}`);
     
     const videos = await processFeedWithShotstack(url, templateId, maxItems);
@@ -52,7 +52,7 @@ router.post('/shotstack', async (req, res) => {
     
     res.json({ 
       success: true,
-      message: `Processing done: ${successCount} videos created, ${errorCount} errors`,
+      message: `Processing completed: ${successCount} videos created, ${errorCount} errors`,
       summary: {
         total: videos.length,
         success: successCount,
@@ -71,7 +71,7 @@ router.post('/shotstack', async (req, res) => {
 
 // Webhook endpoint to receive notifications from Shotstack
 router.post('/webhook/shotstack', async (req, res) => {
-  console.log('🔔 Webhook recebido do Shotstack:', JSON.stringify(req.body, null, 2));
+  console.log('🔔 Webhook received from Shotstack:', JSON.stringify(req.body, null, 2));
   
   try {
     const { id, owner, status, url, error, data } = req.body;
@@ -98,7 +98,7 @@ router.post('/webhook/shotstack', async (req, res) => {
     console.log(`Status updated via webhook: ${id} -> ${status}`);
     
     if (status === 'done' && url) {
-      console.log(`Video done via webhook: ${url}`);
+      console.log(`Video completed via webhook: ${url}`);
     } else if (status === 'failed') {
       console.log(`Video failed via webhook: ${error}`);
     }

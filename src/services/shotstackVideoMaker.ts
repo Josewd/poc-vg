@@ -77,7 +77,7 @@ export class ShotstackVideoMaker {
   }
 
   /**
-   * Verifica o status de um render
+   * Check render status
    */
   async getRenderStatus(renderId: string): Promise<RenderStatus> {
     try {
@@ -107,7 +107,7 @@ export class ShotstackVideoMaker {
     while (Date.now() - startTime < maxWaitTime) {
       const status = await this.getRenderStatus(renderId);
       
-      console.log(`Status do render ${renderId}: ${status.response.status}`);
+      console.log(`Render status ${renderId}: ${status.response.status}`);
 
       if (status.response.status === 'done') {
         if (status.response.url) {
@@ -188,13 +188,13 @@ export class ShotstackVideoMaker {
   }
 }
 
-// Função para obter a URL do webhook baseada no ambiente
+// Function to get webhook URL based on environment
 function getWebhookUrl(): string {
   const baseUrl = process.env.WEBHOOK_BASE_URL || 'http://localhost:3000';
   return `${baseUrl}/webhook/shotstack`;
 }
 
-// Instância padrão do Shotstack com webhook próprio
+// Default Shotstack instance with own webhook
 export const shotstackMaker = new ShotstackVideoMaker(
   'sdtRcPSCkY32rFS6l3YfxU80GHdmINI6sQo2Sm5Y',
   getWebhookUrl()

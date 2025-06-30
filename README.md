@@ -60,19 +60,6 @@ curl -X POST http://localhost:3000/shotstack \
   }'
 ```
 
-## 🔧 Configuration
-
-The project comes pre-configured with:
-- **Shotstack API Key**: `ort2vvEEUIGo3VifniEcXv7AdtEhdcBvvAk5dEpS`
-- **Default Template ID**: `2635a995-c613-478b-8dd6-429529854211`
-- **Webhook**: `https://webhook.site/c3543d8c-beca-4707-a1c2-8a84545cdea0`
-
-## 🧪 Testing
-
-```bash
-npm run test:shotstack
-```
-
 ## 📚 Complete Documentation
 
 See `SHOTSTACK_EXAMPLES.md` for detailed examples and other available endpoints.

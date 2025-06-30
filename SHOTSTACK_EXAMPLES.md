@@ -1,17 +1,17 @@
-# Shotstack Video Maker - Exemplos de Uso
+# Shotstack Video Maker - Usage Examples
 
-Este projeto agora inclui integração completa com a API Shotstack para criação de vídeos profissionais usando templates, **incluindo processamento automático de feeds MRSS** similar ao endpoint do FFmpeg.
+This project now includes complete integration with the Shotstack API for creating professional videos using templates, **including automatic MRSS feed processing** similar to the FFmpeg endpoint.
 
-## Configuração
+## Configuration
 
 - **API Key**: `ort2vvEEUIGo3VifniEcXv7AdtEhdcBvvAk5dEpS`
 - **Webhook URL**: `https://webhook.site/c3543d8c-beca-4707-a1c2-8a84545cdea0`
 
-## 🚀 Endpoint Principal - Processar Feed MRSS
+## 🚀 Main Endpoint - Process MRSS Feed
 
-### **POST** `/shotstack` ⭐ **NOVO**
+### **POST** `/shotstack` ⭐ **NEW**
 
-**Este é o endpoint principal**, similar ao endpoint do FFmpeg. Recebe uma URL de feed MRSS e gera automaticamente vídeos para os itens usando Shotstack.
+**This is the main endpoint**, similar to the FFmpeg endpoint. It receives an MRSS feed URL and automatically generates videos for the items using Shotstack.
 
 ```json
 {
@@ -21,11 +21,11 @@ Este projeto agora inclui integração completa com a API Shotstack para criaç�
 }
 ```
 
-**Resposta:**
+**Response:**
 ```json
 {
   "success": true,
-  "message": "Processamento concluído: 4 vídeos criados, 1 erros",
+  "message": "Processing completed: 4 videos created, 1 errors",
   "summary": {
     "total": 5,
     "success": 4,
@@ -51,17 +51,17 @@ Este projeto agora inclui integração completa com a API Shotstack para criaç�
 }
 ```
 
-**Características:**
-- ✅ Processa feeds RSS/MRSS automaticamente
-- ✅ Extrai imagens dos itens ou do conteúdo do artigo
-- ✅ Cria vídeos usando template Shotstack
-- ✅ Aguarda conclusão de cada vídeo (polling automático)
-- ✅ Retorna URLs dos vídeos prontos
-- ✅ Tratamento robusto de erros
-- ✅ Limitação configurável de itens (maxItems)
-- ✅ Pausa entre requests para não sobrecarregar a API
+**Features:**
+- ✅ Processes RSS/MRSS feeds automatically
+- ✅ Extracts images from items or article content
+- ✅ Creates videos using Shotstack template
+- ✅ Waits for completion of each video (automatic polling)
+- ✅ Returns ready-to-use video URLs
+- ✅ Robust error handling
+- ✅ Configurable item limitation (maxItems)
+- ✅ Pause between requests to avoid overloading the API
 
-### Exemplo com cURL:
+### Example with cURL:
 ```bash
 curl -X POST http://localhost:3000/shotstack \
   -H "Content-Type: application/json" \
@@ -72,53 +72,53 @@ curl -X POST http://localhost:3000/shotstack \
   }'
 ```
 
-## Outros Endpoints Disponíveis
+## Other Available Endpoints
 
-### 1. Criar Vídeo Simples
+### 1. Create Simple Video
 **POST** `/shotstack/create`
 
-Cria um vídeo usando um template com substituições básicas.
+Creates a video using a template with basic substitutions.
 
 ```json
 {
   "templateId": "2635a995-c613-478b-8dd6-429529854211",
-  "title": "Título do Vídeo",
-  "imageUrl": "https://exemplo.com/imagem.jpg",
+  "title": "Video Title",
+  "imageUrl": "https://example.com/image.jpg",
   "additionalReplacements": {
-    "subtitle": "Subtítulo opcional",
-    "author": "Nome do Autor"
+    "subtitle": "Optional Subtitle",
+    "author": "Author Name"
   }
 }
 ```
 
-**Resposta:**
+**Response:**
 ```json
 {
   "success": true,
   "videoUrl": "https://cdn.shotstack.io/au/v1/video.mp4",
-  "message": "Vídeo criado com sucesso!"
+  "message": "Video created successfully!"
 }
 ```
 
-### 2. Criar Vídeo de Notícia
+### 2. Create News Video
 **POST** `/shotstack/news`
 
-Especializado para criar vídeos de notícias/artigos.
+Specialized for creating news/article videos.
 
 ```json
 {
   "templateId": "2635a995-c613-478b-8dd6-429529854211",
-  "headline": "Manchete da Notícia",
-  "imageUrl": "https://exemplo.com/noticia.jpg",
-  "author": "Jornalista",
+  "headline": "News Headline",
+  "imageUrl": "https://example.com/news.jpg",
+  "author": "Journalist",
   "date": "2024-01-15"
 }
 ```
 
-### 3. Template Personalizado
+### 3. Custom Template
 **POST** `/shotstack/template`
 
-Renderiza usando configuração completa de template.
+Renders using complete template configuration.
 
 ```json
 {
@@ -138,7 +138,7 @@ Renderiza usando configuração completa de template.
 }
 ```
 
-**Resposta:**
+**Response:**
 ```json
 {
   "success": true,
@@ -153,12 +153,12 @@ Renderiza usando configuração completa de template.
 }
 ```
 
-### 4. Verificar Status do Render
+### 4. Check Render Status
 **GET** `/shotstack/status/:renderId`
 
-Verifica o progresso de um render específico.
+Checks the progress of a specific render.
 
-**Resposta:**
+**Response:**
 ```json
 {
   "success": true,
@@ -170,32 +170,32 @@ Verifica o progresso de um render específico.
 }
 ```
 
-Status possíveis:
-- `queued`: Na fila
-- `fetching`: Buscando recursos
-- `rendering`: Renderizando
-- `saving`: Salvando
-- `done`: Concluído
-- `failed`: Falhou
+Possible statuses:
+- `queued`: In queue
+- `fetching`: Fetching resources
+- `rendering`: Rendering
+- `saving`: Saving
+- `done`: Completed
+- `failed`: Failed
 
-### 5. Listar Todos os Renders
+### 5. List All Renders
 **GET** `/shotstack/renders`
 
-Lista todos os renders da conta.
+Lists all renders from the account.
 
-## Comparação com FFmpeg
+## Comparison with FFmpeg
 
-| Recurso | FFmpeg (Atual) | Shotstack (Novo) |
-|---------|----------------|------------------|
-| **Entrada** | Feed MRSS URL | Feed MRSS URL |
-| **Processamento** | Local (FFmpeg) | Cloud (Shotstack) |
-| **Qualidade** | Básica | Profissional |
-| **Templates** | Código fixo | Templates visuais |
-| **Escalabilidade** | Limitada | Alta |
-| **Velocidade** | Média | Rápida (paralelo) |
-| **Recursos** | CPU local | Cloud infinita |
+| Feature | FFmpeg (Current) | Shotstack (New) |
+|---------|------------------|-----------------|
+| **Input** | MRSS Feed URL | MRSS Feed URL |
+| **Processing** | Local (FFmpeg) | Cloud (Shotstack) |
+| **Quality** | Basic | Professional |
+| **Templates** | Fixed code | Visual templates |
+| **Scalability** | Limited | High |
+| **Speed** | Average | Fast (parallel) |
+| **Resources** | Local CPU | Infinite cloud |
 
-## Exemplo de Uso Completo
+## Complete Usage Example
 
 ```javascript
 // 1. Processar feed automaticamente

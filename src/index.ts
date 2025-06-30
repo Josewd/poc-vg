@@ -7,21 +7,21 @@ app.use(express.json());
 app.use('/public', express.static(path.join(__dirname, '../public')));
 app.use(express.static(path.join(__dirname)));
 
-// Usar as rotas diretamente na raiz
+// Use routes directly at root
 app.use('/', feedRouter);
 
-// Rota para servir o HTML principal
+// Route to serve main HTML
 app.get('/app', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.listen(3000, () => {
   console.log('🚀 Server running on http://localhost:3000');
-  console.log('📍 Endpoints disponíveis:');
-  console.log('   POST /shotstack - Processar feed MRSS com Shotstack');
-  console.log('   POST /webhook/shotstack - Webhook do Shotstack');
-  console.log('   GET  /shotstack/renders - Listar renders');
-  console.log('   GET  /app - Interface web');
+  console.log('📍 Available endpoints:');
+  console.log('   POST /shotstack - Process MRSS feed with Shotstack');
+  console.log('   POST /webhook/shotstack - Shotstack Webhook');
+  console.log('   GET  /shotstack/renders - List renders');
+  console.log('   GET  /app - Web interface');
 });
 
 // File: src/routes/feed.ts

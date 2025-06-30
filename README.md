@@ -1,16 +1,16 @@
-# 🎬 Video Generator com Shotstack
+# 🎬 Video Generator with Shotstack
 
-Gerador automático de vídeos profissionais a partir de feeds MRSS usando a API Shotstack.
+Automatic generator of professional videos from MRSS feeds using the Shotstack API.
 
-## 🚀 Como Usar
+## 🚀 How to Use
 
-### 1. Iniciar o Servidor
+### 1. Start the Server
 ```bash
 npm install
 npm run dev
 ```
 
-### 2. Gerar Vídeos Automaticamente
+### 2. Generate Videos Automatically
 **POST** `http://localhost:3000/shotstack`
 
 ```json
@@ -21,11 +21,11 @@ npm run dev
 }
 ```
 
-### 3. Receber URLs dos Vídeos
+### 3. Receive Video URLs
 ```json
 {
   "success": true,
-  "message": "Processamento concluído: 4 vídeos criados, 1 erros",
+  "message": "Processing completed: 4 videos created, 1 errors",
   "summary": {
     "total": 5,
     "success": 4,
@@ -41,14 +41,14 @@ npm run dev
 }
 ```
 
-## ✨ O Que Faz
+## ✨ What It Does
 
-1. **Recebe** uma URL de feed RSS/MRSS
-2. **Extrai** títulos, imagens e metadados dos artigos
-3. **Cria** vídeos profissionais usando templates Shotstack
-4. **Retorna** URLs dos vídeos prontos para uso
+1. **Receives** an RSS/MRSS feed URL
+2. **Extracts** titles, images and metadata from articles
+3. **Creates** professional videos using Shotstack templates
+4. **Returns** URLs of ready-to-use videos
 
-## 🎯 Exemplo Prático
+## 🎯 Practical Example
 
 ```bash
 curl -X POST http://localhost:3000/shotstack \
@@ -60,27 +60,27 @@ curl -X POST http://localhost:3000/shotstack \
   }'
 ```
 
-## 🔧 Configuração
+## 🔧 Configuration
 
-O projeto já vem configurado com:
-- **API Key Shotstack**: `ort2vvEEUIGo3VifniEcXv7AdtEhdcBvvAk5dEpS`
-- **Template ID padrão**: `2635a995-c613-478b-8dd6-429529854211`
+The project comes pre-configured with:
+- **Shotstack API Key**: `ort2vvEEUIGo3VifniEcXv7AdtEhdcBvvAk5dEpS`
+- **Default Template ID**: `2635a995-c613-478b-8dd6-429529854211`
 - **Webhook**: `https://webhook.site/c3543d8c-beca-4707-a1c2-8a84545cdea0`
 
-## 🧪 Testar
+## 🧪 Testing
 
 ```bash
 npm run test:shotstack
 ```
 
-## 📚 Documentação Completa
+## 📚 Complete Documentation
 
-Veja `SHOTSTACK_EXAMPLES.md` para exemplos detalhados e outros endpoints disponíveis.
+See `SHOTSTACK_EXAMPLES.md` for detailed examples and other available endpoints.
 
-## 🔄 Fluxo Completo
+## 🔄 Complete Flow
 
 ```
-Feed RSS → Parse → Extração de Imagens → Template Shotstack → Vídeo Profissional
+RSS Feed → Parse → Image Extraction → Shotstack Template → Professional Video
 ```
 
-**Simples assim!** 🎉 
+**That simple!** 🎉 

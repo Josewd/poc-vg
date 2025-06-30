@@ -2,11 +2,6 @@
 
 This project now includes complete integration with the Shotstack API for creating professional videos using templates, **including automatic MRSS feed processing** similar to the FFmpeg endpoint.
 
-## Configuration
-
-- **API Key**: `ort2vvEEUIGo3VifniEcXv7AdtEhdcBvvAk5dEpS`
-- **Webhook URL**: `https://webhook.site/c3543d8c-beca-4707-a1c2-8a84545cdea0`
-
 ## 🚀 Main Endpoint - Process MRSS Feed
 
 ### **POST** `/shotstack` ⭐ **NEW**

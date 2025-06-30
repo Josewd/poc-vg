@@ -1,0 +1,129 @@
+/* Container for full-bleed image */
+.image-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Frame 1: Image zoom from 100% to 115% */
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.0);
+  transform-origin: center;
+  animation: zoom-in 2s ease-in-out forwards;
+}
+
+@keyframes zoom-in {
+  to {
+    transform: scale(1.15);
+  }
+}
+
+/* Frame 2: Black overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  animation: fade-overlay 0.6s ease-in 2s forwards;
+}
+
+@keyframes fade-overlay {
+  to {
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Frame 2: "Exclusive" tag */
+.exclusive-tag {
+  position: absolute;
+  bottom: 20%;
+  left: 10%;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transform: translateY(12px);
+  opacity: 0;
+  animation: slide-up-tag 0.5s ease-out 2s forwards;
+}
+
+@keyframes slide-up-tag {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Frame 2: Stroke (SVG line) */
+.stroke {
+  position: absolute;
+  bottom: 20%;
+  left: 10%;
+  width: 100px;
+  height: 4px;
+}
+
+.stroke path {
+  stroke: white;
+  stroke-width: 4;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw-stroke 0.5s ease-in 2s forwards;
+}
+
+@keyframes draw-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Frame 3: Headline (line by line) */
+.headline {
+  position: absolute;
+  bottom: 10%;
+  left: 10%;
+  color: white;
+  font-size: 1.5rem;
+  padding-top: 10px;
+}
+
+.headline span {
+  display: block;
+  transform: translateY(12px);
+  opacity: 0;
+  animation: slide-up-headline 0.5s ease-out 2.9s forwards;
+}
+
+.headline span:nth-child(1) { animation: slide-up-headline 0.5s ease-out 2.5s forwards; }
+.headline span:nth-child(2) { animation: slide-up-headline 0.5s ease-out 2.7s forwards; }
+.headline span:nth-child(3) { animation: slide-up-headline 0.5s ease-out 2.9s forwards; }
+
+@keyframes slide-up-headline {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Frame 3: CTA */
+.cta {
+  position: absolute;
+  bottom: 5%;
+  left: 10%;
+  color: white;
+  font-size: 1.2rem;
+  opacity: 0;
+  animation: fade-in-cta 0.5s ease-in 3.1s forwards;
+}
+
+@keyframes fade-in-cta {
+  to {
+    opacity: 1;
+  }
+}

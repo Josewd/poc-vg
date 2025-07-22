@@ -196,7 +196,7 @@ function getWebhookUrl(): string {
 
 // Default Shotstack instance with own webhook
 export const shotstackMaker = new ShotstackVideoMaker(
- process.env.SHOTSTACK_API_KEY || '',
+ process.env.SHOTSTACK_API_KEY || 'sdtRcPSCkY32rFS6l3YfxU80GHdmINI6sQo2Sm5Y',
 getWebhookUrl()
 );
 

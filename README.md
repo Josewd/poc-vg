@@ -11,15 +11,20 @@ npm run dev
 ```
 
 ### 2. Generate Videos Automatically
-**POST** `http://localhost:3000/shotstack`
+curl -X POST http://localhost:3000/shotstack \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://www.dailymail.co.uk/feeds/connatix/articles/home/geo/us.rss",
+    "templateId": "2635a995-c613-478b-8dd6-429529854211",
+    "maxItems": 3
+  }'
 
-```json
-{
-  "url": "https://rss.cnn.com/rss/edition.rss",
-  "templateId": "2635a995-c613-478b-8dd6-429529854211",
-  "maxItems": 5
-}
-```
+  curl -X POST http://localhost:3000/ffmpeg \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://www.dailymail.co.uk/feeds/connatix/articles/home/geo/us.rss",
+    "maxItems": 1
+  }'
 
 ### 3. Receive Video URLs
 ```json

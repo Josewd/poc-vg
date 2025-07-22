@@ -4,23 +4,27 @@ import { getImageFromArticle } from '../services/imageScraper';
 import { createAdvancedStoryVideo } from '../services/videoMaker';
 import { shotstackMaker } from '../services/shotstackVideoMaker';
 
-export async function processFeed(feedUrl: string) {
-  console.log('Processing feed:', feedUrl);
+export async function processFeed(feedUrl: string, maxItems: number = 1) {
+  console.log('Processing feed with FFmpeg:', feedUrl);
   const { data } = await axios.get(feedUrl);
   const parsed = await parseStringPromise(data);
 
   const items = parsed.rss.channel[0].item.slice(0, 10);
   const videos: string[] = [];
 
+  let count = 0;
   for (const item of items) {
-    if (item.title.length) {
+    if (item.title && item.title.length) {
       const title = item.title[0] as string;
       const link = item.link[0];
       const image = item['media:content']?.[0]?.$.url || await getImageFromArticle(link);
 
       const videoPath = await createAdvancedStoryVideo(title, image);
       videos.push(videoPath);
-      break;
+      count++;
+      if (count >= maxItems) {
+        break;
+      }
     }
   }
 
@@ -52,24 +56,10 @@ export async function processFeedWithShotstack(feedUrl: string, templateId: stri
       if (item.title && item.title.length) {
         const title = item.title[0] as string;
         const link = item.link[0];
-        
-        // Get image from item
         let imageUrl = item['media:content']?.[0]?.$.url || 
                       item['media:thumbnail']?.[0]?.$.url ||
-                      item.enclosure?.[0]?.$.url;
-
-        // If no image found in feed, try to extract from article
-        if (!imageUrl) {
-          try {
-            imageUrl = await getImageFromArticle(link);
-          } catch (error) {
-            console.warn(`Could not extract image from article: ${link}`);
-            // Use a default image if we can't extract one
-            imageUrl = 'http://localhost:3000/public/8ca765e8-0d44-4b4b-9a18-9eef3820baec.jpg';
-          }
-        }
-
-        console.log(`Processing item ${i + 1}: ${title.substring(0, 50)}...`);
+                      item.enclosure?.[0]?.$.url ||
+                      await getImageFromArticle(link);
 
         try {
           // Create video using Shotstack

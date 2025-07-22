@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { processFeed, processFeedWithShotstack } from "../services/feedParser";
-import { shotstackMaker } from "../services/shotstackVideoMaker";
+import fs from 'fs';
+import path from 'path';
 
 const router = Router();
 
@@ -16,12 +17,12 @@ const renderStatusStore = new Map<string, {
 
 
 // Endpoint to process feed with FFmpeg
-router.post('/', async (req, res) => {
-  const { url } = req.body;
+router.post('/ffmpeg', async (req, res) => {
+  const { url, maxItems = 1 } = req.body;
   if (!url) return res.status(400).json({ error: 'Missing feed URL' });
 
   try {
-    const videos = await processFeed(url);
+    const videos = await processFeed(url, maxItems);
     res.json({ videos });
   } catch (err) {
     console.error(err);
@@ -29,9 +30,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Shotstack endpoint - similar to FFmpeg endpoint
 router.post('/shotstack', async (req, res) => {
-  const { url, templateId = process.env.SHOTSTACK_TEMPLATE_ID || '', maxItems = 5 } = req.body;
+  const { url, templateId = process.env.SHOTSTACK_TEMPLATE_ID || '', maxItems = 1 } = req.body;
   
   if (!url) {
     return res.status(400).json({ error: 'Missing feed URL' });
@@ -99,6 +99,14 @@ router.post('/webhook/shotstack', async (req, res) => {
     
     if (status === 'done' && url) {
       console.log(`Video completed via webhook: ${url}`);
+      
+      // Download and save video locally
+      try {
+        console.log(`🎉 Video downloaded and saved: ${url}`);
+      } catch (downloadError) {
+        console.error('Failed to download video:', downloadError);
+        // Keep the original URL if download fails
+      }
     } else if (status === 'failed') {
       console.log(`Video failed via webhook: ${error}`);
     }
@@ -116,6 +124,46 @@ router.post('/webhook/shotstack', async (req, res) => {
     res.status(500).json({ 
       error: 'Failed to process webhook',
       details: err instanceof Error ? err.message : 'Unknown error'
+    });
+  }
+});
+
+// Endpoint to list downloaded videos
+router.get('/videos/local', async (req, res) => {
+  try {
+    const publicDir = path.join(__dirname, '../../public');
+    
+    if (!fs.existsSync(publicDir)) {
+      return res.json({ videos: [] });
+    }
+    
+    const files = fs.readdirSync(publicDir);
+    const videoFiles = files
+      .filter(file => file.endsWith('.mp4'))
+      .map(file => {
+        const filePath = path.join(publicDir, file);
+        const stats = fs.statSync(filePath);
+        
+        return {
+          filename: file,
+          url: `/public/${file}`,
+          size: stats.size,
+          createdAt: stats.birthtime,
+          modifiedAt: stats.mtime
+        };
+      })
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime()); // Most recent first
+    
+    res.json({
+      success: true,
+      count: videoFiles.length,
+      videos: videoFiles
+    });
+  } catch (error) {
+    console.error('Error listing local videos:', error);
+    res.status(500).json({
+      error: 'Failed to list local videos',
+      details: error instanceof Error ? error.message : 'Unknown error'
     });
   }
 });
